@@ -12,6 +12,7 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   // color macro
   init_pair(1, COLOR_WHITE, COLOR_BLACK);
   init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_RED, COLOR_BLACK);
 
   // Parent window
   WINDOW *gameFrame = newwin(height - 10, width - 106, WINDOW_Y, WINDOW_X);
@@ -25,6 +26,9 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   wattron(scoreWindow, COLOR_PAIR(2) | A_BOLD);
   mvwprintw(scoreWindow, 2, 2, "Score: %d", game->score);
   wattroff(scoreWindow, COLOR_PAIR(2) | A_BOLD);
+  wattron(scoreWindow, COLOR_PAIR(3));
+  mvwaddstr(scoreWindow, 2, gameFrameWidth-30, "Press \'q\' to quit");
+  wattroff(scoreWindow, COLOR_PAIR(3));
   box(scoreWindow, 0, 0);
   wrefresh(scoreWindow);
 
@@ -47,8 +51,8 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
       game->snake->y >= gameWindowHeight) {
     game->currentLayout = GAMEOVER;
   }
-  if(checkSelfCollision(game->snake)){
-	  game->currentLayout = GAMEOVER;
+  if (checkSelfCollision(game->snake)) {
+    game->currentLayout = GAMEOVER;
   }
 
   return gameFrame;
