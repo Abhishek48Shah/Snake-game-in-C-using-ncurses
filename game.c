@@ -35,7 +35,21 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   drawSnake(game->snake, gameWindow);
   moveSnake(game->snake, dx, dy);
   drawFrog(game->frog, gameWindow);
-  spawnFrog(game->frog, gameFrameHeight, gameWindowWidth);
   wrefresh(gameWindow);
+  if (game->snake->x >= game->frog->x && game->snake->x < game->frog->x + 5 &&
+      game->snake->y == game->frog->y) {
+    game->score += 1;
+    growSnake(game->snake);
+    spawnFrog(game->frog, gameWindowHeight, gameWindowWidth);
+  }
+  if (game->snake->x < 1 || game->snake->y < 0 ||
+      game->snake->x >= gameWindowWidth - 1 ||
+      game->snake->y >= gameWindowHeight) {
+    game->currentLayout = GAMEOVER;
+  }
+  if(checkSelfCollision(game->snake)){
+	  game->currentLayout = GAMEOVER;
+  }
+
   return gameFrame;
 }

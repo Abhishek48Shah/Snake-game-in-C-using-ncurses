@@ -44,13 +44,36 @@ void moveSnake(Snake *head, int dx, int dy) {
     current = current->next;
   }
 }
-void growSnake(Snake *head){
-	while(head->next != NULL){
-		head = head->next;
-	}
-	Snake *newNode = malloc(sizeof(Snake));
-	newNode->x = head->x;
-	newNode->y = head->y;
-	newNode->next = NULL;
-	head->next = newNode;
+void growSnake(Snake *head) {
+  while (head->next != NULL) {
+    head = head->next;
+  }
+  Snake *newNode = malloc(sizeof(Snake));
+  newNode->x = head->x;
+  newNode->y = head->y;
+  newNode->next = NULL;
+  head->next = newNode;
+}
+void distorySnake(Snake **head) {
+  if (!head || !*head)
+    return;
+  Snake *current = *head;
+  while (current) {
+    Snake *temp = current;
+    current = current->next;
+    free(temp);
+  }
+  head = NULL;
+}
+int checkSelfCollision(Snake *head) {
+  int xHead = head->x;
+  int yHead = head->y;
+  Snake *current = head->next;
+  while (current) {
+    if (current->x == xHead && current->y == yHead) {
+      return 1;
+    }
+    current = current->next;
+  }
+  return 0;
 }

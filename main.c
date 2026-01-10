@@ -46,7 +46,11 @@ int main() {
     } else if (game->currentLayout == GAME) {
       currentWindow = drawGame(term_height, term_width, dx, dy, game);
     } else if (game->currentLayout == GAMEOVER) {
-      currentWindow = drawGameOver();
+      if (game->snake != NULL && game->frog != NULL) {
+        distorySnake(&game->snake);
+        distoryFrog(&game->frog);
+      }
+      currentWindow = drawGameOver(term_height, term_width, game);
     }
 
     int input = getch();
@@ -56,28 +60,37 @@ int main() {
       game->currentLayout = GAME;
       break;
     case 'q':
+      if (game->snake != NULL && game->frog != NULL) {
+        distorySnake(&game->snake);
+        distoryFrog(&game->frog);
+      }
       game->quit = 0;
       break;
     case KEY_UP:
-      dx = 0;
-      dy = -1;
+      if (dy != 1) {
+
+        dx = 0;
+        dy = -1;
+      }
       break;
     case KEY_DOWN:
-      dx = 0;
-      dy = 1;
+      if (dy != -1) {
+        dx = 0;
+        dy = 1;
+      }
       break;
     case KEY_LEFT:
-      dx = -1;
-      dy = 0;
+      if (dx != 1) {
+        dx = -1;
+        dy = 0;
+      }
       break;
     case KEY_RIGHT:
-      dx = 1;
-      dy = 0;
+      if (dx != -1) {
+        dx = 1;
+        dy = 0;
+      }
       break;
-    }
-    if(game->snake->x >= game->frog->x && game->snake->y == game->frog->y){
-	    game->score++;
-	    growSnake(game->snake);
     }
   }
   endwin();

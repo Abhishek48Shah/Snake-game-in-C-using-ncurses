@@ -7,5 +7,5 @@ typedef struct Frog {
 struct Frog *createFrog();
 void drawFrog(Frog *frog, WINDOW *window);
 void spawnFrog(Frog *frog, int height, int width);
-// void respawnFrog(Frog *frog, int dx, int dy);
+void distoryFrog(Frog **head);
 #endif

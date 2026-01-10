@@ -18,3 +18,8 @@ void spawnFrog(Frog *frog, int height, int width) {
   frog->x = getRandomAxis(width);
   frog->y = getRandomAxis(height);
 }
+void distoryFrog(Frog **head) {
+ if (!head || !*head) return;
+	free(*head);
+	*head = NULL;
+}

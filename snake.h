@@ -9,4 +9,6 @@ struct Snake *createSnake(int length);
 void drawSnake(Snake *head, WINDOW *window);
 void moveSnake(Snake *head, int dx, int dy);
 void growSnake(Snake *head);
+void distorySnake(Snake **head);
+int checkSelfCollision(Snake *head);
 #endif
