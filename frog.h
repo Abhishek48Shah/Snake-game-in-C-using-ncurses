@@ -4,7 +4,7 @@
 typedef struct Frog {
   int x, y;
 } Frog;
-struct Frog *createFrog(int height, int width);
+struct Frog *createFrog();
 void drawFrog(Frog *frog, WINDOW *window);
 void spawnFrog(Frog *frog, int height, int width);
 // void respawnFrog(Frog *frog, int dx, int dy);
