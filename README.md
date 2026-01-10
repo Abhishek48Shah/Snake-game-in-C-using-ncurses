@@ -1,7 +1,7 @@
 # Snake Game in C (ncurses)
 
 A terminal-based Snake game written in **C** using the **ncurses** library.  
-The game features a menu system, real-time movement, collision detection, and game-over handling — all rendered directly in the terminal.
+The game features a menu system, real-time movement, collision detection, and game-over handling all rendered directly in the terminal.
 
 ---
 
