@@ -1,0 +1,19 @@
+name: Build Snake Game
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install ncurses
+        run: sudo apt-get update && sudo apt-get install -y libncurses5-dev libncursesw5-dev
+
+      - name: Compile
+        run: gcc main.c game.c menu.c snake.c frog.c gameOver.c -o snake -lncurses -Wall -Wextra
