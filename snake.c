@@ -33,8 +33,8 @@ void moveSnake(GameState *game, int dx, int dy) {
   Snake *head = game->snake;
   int prevX = head->x;
   int prevY = head->y;
-game->snakeX =  head->x += dx;
- game->snakeY = head->y += dy;
+  game->snakeX = head->x += dx;
+  game->snakeY = head->y += dy;
   Snake *current = head->next;
   while (current) {
     int tempX = current->x;

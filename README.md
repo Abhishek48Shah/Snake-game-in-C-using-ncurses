@@ -31,6 +31,7 @@ The game features a menu system, real-time movement, collision detection, and ga
 - Score tracking
 - Prevents reverse-direction movement
 - Clean memory management (no leaks)
+- Game state
 
 ---
 
@@ -66,8 +67,12 @@ For best results, run this project using **WSL** or another Unix-like environmen
 
 ### Compile
 
-clang main.c menu.c game.c gameOver.c snake.c frog.c -lncurses -o snake
+```sh
+clang main.c menu.c game.c gameOver.c snake.c frog.c gameState.c existMenu.c  -lncurses -o snake
+```
 
 ### Run
 
+```sh
 ./snake
+```

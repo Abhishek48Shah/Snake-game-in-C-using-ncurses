@@ -20,6 +20,7 @@ int main() {
   game->frogY = 3;
   game->snakeX = 10;
   game->snakeY = 10;
+  game->score = 0;
   initscr();
   cbreak();
   noecho();

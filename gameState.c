@@ -74,10 +74,11 @@ void freeMemory(GameState *game) {
     distoryFrog(&game->frog);
   }
 }
-void removePrevGame(){
-	FILE *file;
-	file = fopen("gameState.sav","w");
-	if(file == NULL){
-		return;
-	}
+void removePrevGame() {
+  FILE *file;
+  file = fopen("gameState.sav", "w");
+  if (file == NULL) {
+    return;
+  }
+  fclose(file);
 }

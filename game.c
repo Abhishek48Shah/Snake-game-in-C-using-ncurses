@@ -27,7 +27,7 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   mvwprintw(scoreWindow, 2, 2, "Score: %d", game->score);
   wattroff(scoreWindow, COLOR_PAIR(2) | A_BOLD);
   wattron(scoreWindow, COLOR_PAIR(3));
-  mvwaddstr(scoreWindow, 2, gameFrameWidth-30, "Press \'q\' to quit");
+  mvwaddstr(scoreWindow, 2, gameFrameWidth - 30, "Press \'q\' to quit");
   wattroff(scoreWindow, COLOR_PAIR(3));
   box(scoreWindow, 0, 0);
   wrefresh(scoreWindow);
@@ -43,7 +43,7 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   if (game->snake->x >= game->frog->x && game->snake->x < game->frog->x + 5 &&
       game->snake->y == game->frog->y) {
     game->score += 1;
-    game->snakeLength+=1;
+    game->snakeLength += 1;
     growSnake(game->snake);
     spawnFrog(game, gameWindowHeight, gameWindowWidth);
   }
