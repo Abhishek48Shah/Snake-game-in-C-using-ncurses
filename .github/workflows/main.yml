@@ -16,4 +16,4 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libncurses5-dev libncursesw5-dev
 
       - name: Compile
-        run: gcc main.c game.c menu.c snake.c frog.c gameOver.c -o snake -lncurses -Wall -Wextra
+        run: gcc snake.c frog.c main.c gameOver.c gameState.c game.c menu.c existMenu.c -o snake -lncurses -Wall -Wextra
