@@ -1,9 +1,8 @@
-#include "frog.h"
+#include "exitMenu.h"
 #include "game.h"
 #include "gameOver.h"
 #include "gameState.h"
 #include "menu.h"
-#include "snake.h"
 #include <ncurses.h>
 #include <stdlib.h>
 #define DELAY 200
@@ -17,8 +16,10 @@ int main() {
   game->currentLayout = MENU;
   game->quit = 1;
   game->snakeLength = 3;
-  game->score = 0;
-
+  game->frogX = 5;
+  game->frogY = 3;
+  game->snakeX = 10;
+  game->snakeY = 10;
   initscr();
   cbreak();
   noecho();
@@ -28,8 +29,7 @@ int main() {
   getmaxyx(stdscr, term_height, term_width);
   box(stdscr, 0, 0);
   wrefresh(stdscr);
-  game->snake = createSnake(game->snakeLength);
-  game->frog = createFrog();
+  int gameStatus = checkGameState();
   while (game->quit) {
 
     timeout(DELAY);
@@ -42,29 +42,50 @@ int main() {
     }
 
     if (game->currentLayout == MENU) {
-      currentWindow = drawMenu(term_height, term_width);
+      currentWindow = drawMenu(term_height, term_width, gameStatus);
     } else if (game->currentLayout == GAME) {
       currentWindow = drawGame(term_height, term_width, dx, dy, game);
     } else if (game->currentLayout == GAMEOVER) {
-      if (game->snake != NULL && game->frog != NULL) {
-        distorySnake(&game->snake);
-        distoryFrog(&game->frog);
-      }
       currentWindow = drawGameOver(term_height, term_width, game);
+    } else if (game->currentLayout == SAVE) {
+      currentWindow = drawExitMenu(term_height, term_width);
     }
 
     int input = getch();
 
     switch (input) {
+      // To update game layout
     case 'g':
-      game->currentLayout = GAME;
-      break;
-    case 'q':
-      if (game->snake != NULL && game->frog != NULL) {
-        distorySnake(&game->snake);
-        distoryFrog(&game->frog);
+      if (game->currentLayout != GAME) {
+        setGameState(game, 0);
+        game->currentLayout = GAME;
       }
-      game->quit = 0;
+      break;
+    case 'c':
+      if (game->currentLayout != GAME && game->currentLayout != GAMEOVER) {
+        setGameState(game, 1);
+        game->currentLayout = GAME;
+      }
+      break;
+      // TO exit from the game
+    case 'q':
+      if (game->currentLayout == GAME) {
+        game->currentLayout = SAVE;
+      } else {
+        game->quit = 0;
+      }
+      break;
+    case 'y':
+      if (game->currentLayout == SAVE) {
+        saveGame(game);
+        game->quit = 0;
+      }
+      break;
+    case 'n':
+      if (game->currentLayout == SAVE) {
+        removePrevGame();
+        game->quit = 0;
+      }
       break;
     case KEY_UP:
       if (dy != 1) {
@@ -93,5 +114,7 @@ int main() {
       break;
     }
   }
+  freeMemory(game);
+  free(game);
   endwin();
 }

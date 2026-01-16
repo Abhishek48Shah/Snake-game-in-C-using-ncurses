@@ -37,14 +37,15 @@ WINDOW *drawGame(int height, int width, int dx, int dy, GameState *game) {
   getmaxyx(gameWindow, gameWindowHeight, gameWindowWidth);
   box(gameWindow, 0, 0);
   drawSnake(game->snake, gameWindow);
-  moveSnake(game->snake, dx, dy);
+  moveSnake(game, dx, dy);
   drawFrog(game->frog, gameWindow);
   wrefresh(gameWindow);
   if (game->snake->x >= game->frog->x && game->snake->x < game->frog->x + 5 &&
       game->snake->y == game->frog->y) {
     game->score += 1;
+    game->snakeLength+=1;
     growSnake(game->snake);
-    spawnFrog(game->frog, gameWindowHeight, gameWindowWidth);
+    spawnFrog(game, gameWindowHeight, gameWindowWidth);
   }
   if (game->snake->x < 1 || game->snake->y < 0 ||
       game->snake->x >= gameWindowWidth - 1 ||

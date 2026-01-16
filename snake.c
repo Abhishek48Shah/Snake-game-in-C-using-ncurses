@@ -1,13 +1,14 @@
 #include "snake.h"
+#include "gameState.h"
 #include <ncurses.h>
 #include <stdlib.h>
-struct Snake *createSnake(int length) {
+struct Snake *createSnake(GameState *game) {
   Snake *head = NULL;
   Snake *tail = NULL;
-  for (int i = 0; i < length; i++) {
+  for (int i = 0; i < game->snakeLength; i++) {
     Snake *node = malloc(sizeof(Snake));
-    node->x = 10;
-    node->y = 10 + i;
+    node->x = game->snakeX;
+    node->y = game->snakeY + i;
     node->next = NULL;
     if (head == NULL) {
       head = node;
@@ -28,11 +29,12 @@ void drawSnake(struct Snake *head, WINDOW *window) {
     head = head->next;
   }
 }
-void moveSnake(Snake *head, int dx, int dy) {
+void moveSnake(GameState *game, int dx, int dy) {
+  Snake *head = game->snake;
   int prevX = head->x;
   int prevY = head->y;
-  head->x += dx;
-  head->y += dy;
+game->snakeX =  head->x += dx;
+ game->snakeY = head->y += dy;
   Snake *current = head->next;
   while (current) {
     int tempX = current->x;
